@@ -1,4 +1,4 @@
-
+   
 
 function getComputerChoice(){
     const randomnr = Math.random()
@@ -27,38 +27,76 @@ function getHumanChoice(){
     return choice
      
 }
-
-function playRound(humanChoice , computerChoice){
     
-    if (humanChoice === "rock" && computerChoice === "scissors"){
-        return alert(win) , console.log("you´ve won") , humanScore++
-    }
-    else if (humanChoice === "paper" && computerChoice === "rock"){
-        return alert(win) , console.log("you´ve won") , humanScore++
-    }
-    else if (humanChoice === "scissors" && computerChoice === "paper"){
-        return alert(win) , console.log("you´ve won") , humanScore++
-    }
-    else if (humanChoice === computerChoice){
-        return alert("draw")  
-    }
-    else {
-        return alert(loss) , console.log("computer won") , computerScore++}
-         
-}  
-
-    const win = "Congrats, you´ve won!"
-    const loss = "Shit, you lost!"
-    const humanChoice = getHumanChoice()
-    const computerChoice = getComputerChoice()
+function checkWinner(humanChoice , computerChoice){
     
+    if (humanChoice == computerChoice){
+        return "tie"
+    }
+    else if ((humanChoice == "rock" && computerChoice == "scissors") ||
+         (humanChoice == "paper" && computerChoice == "rock") ||
+         (humanChoice == "scissors" && computerChoice == "paper")){
+    
+        return "player"
+        }
+    else if  ((computerChoice == "rock" && humanChoice == "scissors") ||
+    (computerChoice == "paper" && humanChoice == "rock") ||
+    (computerChoice == "scissors" &&  humanChoice== "paper")){
+    
+        return "computer"
+        }
+        else return null
+}
 
-let humanScore = 0
-let computerScore = 0
+
+        
+function playGame(){
+   
+    function playRound(humanChoice , computerChoice){
+    
+        let result = checkWinner(humanChoice , computerChoice)
+        let playerWon = `you´ve won! ${humanChoice} beats ${computerChoice}.`
+        let computerWon = `you´ve lost! ${computerChoice} beats ${humanChoice}.`
+    
+        if (result == "tie"){
+            return console.log("it´s a tie")
+        }
+        else if (result == "player"){
+            return humanScore++ , console.log(playerWon)
+        }
+        else if(result == "computer"){
+            return computerScore++ , console.log(computerWon)
+        }
+        
+        
+    
+    }
+    for (i = 0 ; i < 5 ; i++){
+        const humanSelection = getHumanChoice()
+        const computerSelection = getComputerChoice()
+
+        playRound(humanSelection,computerSelection)
+        console.log("-------------")
+    }
+
+    if (humanScore > computerScore){
+        return console.log(win)
+    }
+    else if (computerScore > humanScore){
+        return console.log(loss)
+    }
+    else return console.log("You have the same score")
+
+   }
+    
+   const win = "Congrats, you´ve won!"
+   const loss = "Shit, you lost!"
+   
+   let computerScore = 0
+   let humanScore = 0
+
+playGame()
 
 
-
-console.log("you´ve chosen ",humanChoice,", the computer has chosen ",computerChoice)
-console.log("your score is ",humanScore," and the computers score is ",computerScore)
-
-
+console.log("your score is ", humanScore)
+console.log("the computer´s score is ", computerScore)
